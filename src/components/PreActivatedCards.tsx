@@ -39,7 +39,9 @@ const PreActivatedCards = ({ preActivatedCards }: Props) => {
       </TableContainer>
 
       <Stack direction="row" spacing={4} justifyContent={"right"}>
-        <Button borderRadius={22} colorScheme="teal" variant="solid">
+        <Button borderRadius={22} colorScheme="teal" variant="solid"
+        onClick={handleActivation} 
+        >
           Activate
         </Button>
         <Button

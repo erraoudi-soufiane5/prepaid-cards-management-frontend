@@ -4,6 +4,9 @@ import ManageCards from "./ManageCards";
 import CreateCards from "./CreateCards";
 import Layout from "./Layout";
 import LandingPage from "./LandingPage";
+import AdminLayout from "./AdminLayout";
+import AdminDashboard from "./AdminDashboard";
+import CreateAccount from "./CreateAccount";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -22,5 +25,16 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [{ index: true, element: <CreateCards /> }],
   },
+  {
+    path: "admin/dashboard",
+    element: <AdminLayout />,
+    children: [{ index: true, element: <AdminDashboard /> }],
+  },
+  {
+    path: "admin/newAccount",
+    element: <AdminLayout />,
+    children: [{ index: true, element: <CreateAccount /> }],
+  },
+  
 ]);
 export default router;

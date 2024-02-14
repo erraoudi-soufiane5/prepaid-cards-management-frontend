@@ -13,6 +13,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,12 +23,14 @@ const Login = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [userRole, setUserRole] = useState<string | null>(null);
   
   const handleLogin = () => {
     const loginData = {
       username: email,
       password: password
     };
+
 
     console.log("login data", loginData);
     axios
@@ -41,6 +44,9 @@ const Login = () => {
           localStorage.setItem("accessToken", accessToken);
           console.log("Access token:", accessToken);
           console.log("Refresh token:", refreshToken);
+          const decodedToken: any = jwtDecode(accessToken);
+          const role = decodedToken.role;
+          setUserRole(role);
           setIsLoggedIn(true);
         } else {
           console.error("Oops, something went wrong.");
@@ -57,9 +63,15 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/dashboard");
+      if (userRole === 'ROLE_USER') {
+        navigate("/dashboard");
+      } else if (userRole === 'ROLE_ADMIN') {
+        navigate("/admin/newAccount");
+      } else {
+        
+      }
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate,userRole]);
   return (
     <>
       <Button onClick={onOpen}>Login</Button>
