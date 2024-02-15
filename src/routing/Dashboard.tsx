@@ -5,6 +5,7 @@ import {
   Grid,
   GridItem,
   Heading,
+  Highlight,
   Table,
   TableContainer,
   Tbody,
@@ -14,15 +15,11 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import "./styles.css";
-import InsightsGraph from "../components/InsightsGraph";
+
+import CardsStatusTable from "../components/CardsStatusTable";
+import TransactionsTable from "../components/TransactionsTable";
 
 function Dashboard() {
-  const insightsData = [
-    { month: "January", moneyIn: 1000, moneyOut: 800 },
-    { month: "February", moneyIn: 1200, moneyOut: 1000 },
-    { month: "March", moneyIn: 800, moneyOut: 900 },
-    // Add more data as needed
-  ];
   return (
     <Box height="100%" overflowY="auto">
       <Grid
@@ -89,6 +86,9 @@ function Dashboard() {
             textAlign="left">
             Cards status
           </Heading>
+          <Box maxHeight="600px" overflowY="auto">
+            <CardsStatusTable />
+          </Box>
         </GridItem>
         <GridItem
           borderRadius={14}
@@ -102,48 +102,10 @@ function Dashboard() {
             mb={8}
             fontWeight={"medium"}
             textAlign="left">
-            Cards status
+            Transactions
           </Heading>
-
           <Box maxHeight="600px" overflowY="auto">
-            {/* Adjust maxHeight as needed */}
-            {/* Your transactions content goes here */}
-            {/* For example: */}
-
-            <TableContainer mb={"9px"} borderRadius={14} bg="#ffffff">
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>CIN/Passeport</Th>
-                    <Th>Employee name</Th>
-                    <Th>Company</Th>
-                    <Th isNumeric>Phone</Th>
-                    <Th>Birth Date</Th>
-                    <Th>Sex</Th>
-                    <Th>civility</Th>
-                    <Th>Select</Th>
-                  </Tr>
-                </Thead>
-                {/* {preActivatedCards.map((card) => (
-              <PreActivatedCard preActivatedCard={card} />
-            ))} */}
-                <Tbody>
-                  {Array.from({ length: 400 }, (_, i) => (
-                    <Tr>
-                      <Td>Transaction {i + 1}</Td>
-                      <Td>Transaction {i + 1}</Td>
-                      <Td>Transaction {i + 1}</Td>
-                      <Td>Transaction {i + 1}</Td>
-                      <Td>Transaction {i + 1}</Td>
-                      <Td>Transaction {i + 1}</Td>
-                      <Td>Transaction {i + 1}</Td>
-
-                      <Td>Moroccan</Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
+            <TransactionsTable />
           </Box>
         </GridItem>
       </Grid>

@@ -16,8 +16,16 @@ function Layout() {
       }}
       height="100vh"
       templateRows="65px 1fr"
+      position="relative" // Set position to relative for z-index to work
     >
-      <GridItem area="nav" bg="#ffffff" position="fixed" width="100%">
+      <GridItem
+        area="nav"
+        bg="#ffffff"
+        position="fixed"
+        width="100%"
+        zIndex="9999">
+        {" "}
+        {/* Set zIndex to a high value */}
         <NavBar />
       </GridItem>
 
@@ -35,8 +43,7 @@ function Layout() {
         paddingTop={3}
         paddingRight={1}
         flex="1"
-        height="1fr"
-      >
+        height="1fr">
         <Outlet />
       </GridItem>
     </Grid>
