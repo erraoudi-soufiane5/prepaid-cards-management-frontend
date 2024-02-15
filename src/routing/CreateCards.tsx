@@ -26,13 +26,15 @@ const CreateCards = () => {
         }}
         padding={3}
         height={"100%"}
-        gap={2}
-      >
+        gap={2}>
         <GridItem area="preActivated" minHeight={"100px"}>
           <Text fontSize="3xl" mb={"8px"}>
             Pre Activated Cards
           </Text>
-          <PreActivatedCards preActivatedCards={preActivatedCards} />
+          <PreActivatedCards
+            preActivatedCards={preActivatedCards}
+            setPreactivatedCards={setPreActivatedCards}
+          />
         </GridItem>
 
         <GridItem area="addNew" minHeight={"400px"}>

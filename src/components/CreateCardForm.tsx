@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import FormControlComponent from "./FormControlComponent";
 import { IPreActivatedCard } from "../Model/PreActivatedCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   onAdd: (cardData: IPreActivatedCard) => void;
@@ -22,6 +22,8 @@ const CreateCardForm = ({ onAdd }: Props) => {
   const [beneficiaryName, setBeneficiaryName] = useState("");
   const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
+
+
 
   const consolidateData = (): IPreActivatedCard => {
     return {
@@ -37,7 +39,16 @@ const CreateCardForm = ({ onAdd }: Props) => {
   const handleAddClick = () => {
     const cardData: IPreActivatedCard = consolidateData();
     onAdd(cardData);
+
+    setCinPassport("");
+    console.log("here")
+    console.log(cinPassport)
   };
+
+  
+
+  console.log("hereeeeee")
+  console.log(cinPassport)
   return (
     <>
       <Grid
