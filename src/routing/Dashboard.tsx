@@ -4,10 +4,11 @@ import "./styles.css";
 import CardsStatusTable from "../components/CardsStatusTable";
 import TransactionsTable from "../components/TransactionsTable";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
   const accessToken = localStorage.getItem("accessToken");
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,7 @@ function Dashboard() {
         console.log("la balance :", response);
 
         if (response.status === 200) {
+          setBalance(data);
         } else {
           console.error("Oops, something went wrong.");
         }
@@ -66,7 +68,7 @@ function Dashboard() {
           </Heading>
 
           <Flex justify="center" height="100%" fontSize="2xl" color="teal.500">
-            $1,234.56 USD
+            {balance} MAD
           </Flex>
         </GridItem>
         <GridItem

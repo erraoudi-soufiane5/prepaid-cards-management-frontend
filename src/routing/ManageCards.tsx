@@ -20,153 +20,116 @@ import {
   NumberInputField,
   NumberInputStepper,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Card } from "../components/CardsStatusTable";
 
 const ManageCards = () => {
+  const [cardsData, setCardsData] = useState<any[]>([]);
+  const accessToken = localStorage.getItem("accessToken");
+
+  let cardsStatusData: Card[] = [];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const axiosConfig = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+
+        const response = await axios.get(
+          "http://localhost:8000/dashboard/listcartes",
+          axiosConfig
+        );
+        const { data } = response;
+        console.log("la reponse :", response);
+
+        if (response.status === 200) {
+          cardsStatusData = data.map((card: any) => ({
+            cardNumber: card.id,
+            cinOrPassport: card.employeId,
+            employeeName: card.employeName,
+            balance: `MAD ${card.solde}`,
+            company: card.entreprise,
+            status:
+              card.status === "ACTIVATED"
+                ? "Active"
+                : card.status === "DEACTIVATED"
+                ? "Disabled"
+                : "Preactive",
+          }));
+          setCardsData(cardsStatusData);
+          console.log(cardsStatusData);
+        } else {
+          console.error("Oops, something went wrong.");
+        }
+      } catch (error: any) {
+        console.error(
+          "Fetching data failed:",
+          error.response ? error.response.data : error
+        );
+      }
+    };
+
+    if (accessToken) {
+      fetchData();
+    }
+  }, [accessToken]);
   return (
     <>
       <TableContainer margin={3} borderRadius={14} bg="#ffffff">
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>Select</Th>
-              <Th>Card Num</Th>
-              <Th>CIN</Th>
-              <Th>Nom proprietaire</Th>
-              <Th>Action</Th>
-              <Th>Code operation</Th>
-              <Th>Motif operation</Th>
-              <Th isNumeric>Montant</Th>
+              <Th textAlign="center">Select</Th>
+              <Th textAlign="center">Card Number</Th>
+              <Th textAlign="center">Employee ID</Th>
+              <Th textAlign="center">Employee name</Th>
+              <Th textAlign="center">Action</Th>
+              <Th textAlign="center">Operation Code</Th>
+              <Th textAlign="center">Motif operation</Th>
+              <Th textAlign="center" isNumeric>
+                Amount
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>
-                <Checkbox defaultChecked></Checkbox>
-              </Td>
-              <Td>11110000000890000</Td>
-              <Td>IB256687</Td>
-              <Td>ER RAOUDI</Td>
-              <Td>
-                <FormControl>
-                  <Select placeholder="Select operation">
-                    <option>Recharge</option>
-                    <option>Decharge</option>
-                    <option>Recalcul de PIN</option>
-                  </Select>
-                </FormControl>
-              </Td>
-              <Td>1</Td>
-              <Td>
-                <FormControl isRequired>
-                  <Input placeholder="First name" />
-                </FormControl>
-              </Td>
-              <Td isNumeric>
-                <NumberInput>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <Checkbox defaultChecked></Checkbox>
-              </Td>
-              <Td>11110000000890000</Td>
-              <Td>IB256687</Td>
-              <Td>ER RAOUDI</Td>
-              <Td>
-                <FormControl>
-                  <Select placeholder="Select operation">
-                    <option>Recharge</option>
-                    <option>Decharge</option>
-                    <option>Recalcul de PIN</option>
-                  </Select>
-                </FormControl>
-              </Td>
-              <Td>1</Td>
-              <Td>
-                <FormControl isRequired>
-                  <Input placeholder="First name" />
-                </FormControl>
-              </Td>
-              <Td isNumeric>
-                <NumberInput>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <Checkbox defaultChecked></Checkbox>
-              </Td>
-              <Td>11110000000890000</Td>
-              <Td>IB256687</Td>
-              <Td>ER RAOUDI</Td>
-              <Td>
-                <FormControl>
-                  <Select placeholder="Select operation">
-                    <option>Recharge</option>
-                    <option>Decharge</option>
-                    <option>Recalcul de PIN</option>
-                  </Select>
-                </FormControl>
-              </Td>
-              <Td>1</Td>
-              <Td>
-                <FormControl isRequired>
-                  <Input placeholder="First name" />
-                </FormControl>
-              </Td>
-              <Td isNumeric>
-                <NumberInput>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <Checkbox defaultChecked></Checkbox>
-              </Td>
-              <Td>11110000000890000</Td>
-              <Td>IB256687</Td>
-              <Td>ER RAOUDI</Td>
-              <Td>
-                <FormControl>
-                  <Select placeholder="Select operation">
-                    <option>Recharge</option>
-                    <option>Decharge</option>
-                    <option>Recalcul de PIN</option>
-                  </Select>
-                </FormControl>
-              </Td>
-              <Td>1</Td>
-              <Td>
-                <FormControl isRequired>
-                  <Input placeholder="First name" />
-                </FormControl>
-              </Td>
-              <Td isNumeric>
-                <NumberInput>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Td>
-            </Tr>
+            {cardsData.map((card, index) => (
+              <Tr key={index}>
+                <Td textAlign="center">
+                  <Checkbox defaultChecked></Checkbox>
+                </Td>
+                <Td textAlign="center">{card.cardNumber}</Td>
+                <Td textAlign="center">{card.cinOrPassport}</Td>
+                <Td textAlign="center">{card.employeeName}</Td>
+                <Td textAlign="center">
+                  <FormControl>
+                    <Select placeholder="Select operation">
+                      <option>Recharge</option>
+                      <option>Decharge</option>
+                    </Select>
+                  </FormControl>
+                </Td>
+                <Td textAlign="center">1</Td>
+                <Td textAlign="center">
+                  <FormControl isRequired>
+                    <Input placeholder="motif operation" />
+                  </FormControl>
+                </Td>
+                <Td textAlign="center" isNumeric>
+                  <NumberInput>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>

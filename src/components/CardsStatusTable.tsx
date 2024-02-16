@@ -13,7 +13,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
 
-interface CardStatus {
+export interface Card {
   cardNumber: string;
   cinOrPassport: string;
   employeeName: string;
@@ -26,7 +26,7 @@ const CardsStatusTable = () => {
   const [cardsData, setCardsData] = useState<any[]>([]);
   const accessToken = localStorage.getItem("accessToken");
 
-  let cardsStatusData: CardStatus[] = [];
+  let cardsStatusData: Card[] = [];
 
   useEffect(() => {
     const fetchData = async () => {
