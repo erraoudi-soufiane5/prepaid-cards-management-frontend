@@ -13,10 +13,6 @@ const CreateCards = () => {
     setPreActivatedCards((prevCards) => [...prevCards, cardData]);
   };
 
-  useEffect(() => {
-    console.log("Updated list of preActivatedCards:", preActivatedCards);
-  }, [preActivatedCards]);
-
   return (
     <Box height="100%" overflowY="auto">
       <Grid

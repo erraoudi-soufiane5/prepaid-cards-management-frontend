@@ -23,8 +23,6 @@ const CreateCardForm = ({ onAdd }: Props) => {
   const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
 
-
-
   const consolidateData = (): IPreActivatedCard => {
     return {
       cinPassport: cinPassport,
@@ -39,16 +37,8 @@ const CreateCardForm = ({ onAdd }: Props) => {
   const handleAddClick = () => {
     const cardData: IPreActivatedCard = consolidateData();
     onAdd(cardData);
-
-    setCinPassport("");
-    console.log("here")
-    console.log(cinPassport)
   };
 
-  
-
-  console.log("hereeeeee")
-  console.log(cinPassport)
   return (
     <>
       <Grid
@@ -61,8 +51,7 @@ const CreateCardForm = ({ onAdd }: Props) => {
         gap={10}
         paddingY={4}
         paddingX={6}
-        mb={"9px"}
-      >
+        mb={"9px"}>
         <GridItem area={"leftSide"}>
           <FormControlComponent
             onChange={setCinPassport}
@@ -80,8 +69,7 @@ const CreateCardForm = ({ onAdd }: Props) => {
               placeholder="Select sex"
               onChange={(e) => {
                 setSex(e.target.value);
-              }}
-            >
+              }}>
               <option value="Homme">Homme</option>
               <option value="Femme">Femme</option>
               <option value="Autre">Autre</option>
@@ -111,16 +99,14 @@ const CreateCardForm = ({ onAdd }: Props) => {
           onClick={handleAddClick}
           borderRadius={22}
           colorScheme="teal"
-          variant="solid"
-        >
+          variant="solid">
           Add
         </Button>
         <Button
           borderRadius={22}
           bg={"#ffffff"}
           variant="solid"
-          color={"#034381"}
-        >
+          color={"#034381"}>
           Discard
         </Button>
       </Stack>

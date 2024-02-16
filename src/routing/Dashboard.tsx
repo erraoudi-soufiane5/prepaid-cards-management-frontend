@@ -1,25 +1,47 @@
-import {
-  Box,
-  Checkbox,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Highlight,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
 import "./styles.css";
 
 import CardsStatusTable from "../components/CardsStatusTable";
 import TransactionsTable from "../components/TransactionsTable";
+import axios from "axios";
+import { useEffect } from "react";
 
 function Dashboard() {
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const axiosConfig = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+
+        const response = await axios.get(
+          "http://localhost:8000/dashboard/balance",
+          axiosConfig
+        );
+        const { data } = response;
+        console.log("la balance :", response);
+
+        if (response.status === 200) {
+        } else {
+          console.error("Oops, something went wrong.");
+        }
+      } catch (error: any) {
+        console.error(
+          "Fetching data failed:",
+          error.response ? error.response.data : error
+        );
+      }
+    };
+
+    if (accessToken) {
+      fetchData();
+    }
+  }, [accessToken]);
   return (
     <Box height="100%" overflowY="auto">
       <Grid

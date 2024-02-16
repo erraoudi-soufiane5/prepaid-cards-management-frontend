@@ -9,51 +9,75 @@ import {
   TableContainer,
   Highlight,
 } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import React, { useEffect, useState } from "react";
+
+interface CardStatus {
+  cardNumber: string;
+  cinOrPassport: string;
+  employeeName: string;
+  balance: string;
+  company: string;
+  status: "Active" | "Disabled";
+}
 
 const CardsStatusTable = () => {
-  const cardsStatusData = [
-    {
-      cardNumber: "1234 5678 9012 3456",
-      cinOrPassport: "AB123456",
-      employeeName: "ER RAOUDI Soufiane",
-      balance: "MAD 1000",
-      company: "sarl",
-      status: "Active",
-    },
-    {
-      cardNumber: "9876 5432 1098 7654",
-      cinOrPassport: "CD789012",
-      employeeName: "Jane Smith",
-      balance: "MAD 2000",
-      company: "sarl",
-      status: "Disabled",
-    },
-    // Add more data objects as needed
-  ];
+  const [cardsData, setCardsData] = useState<any[]>([]);
+  const accessToken = localStorage.getItem("accessToken");
 
-  // Generate more data objects
-  for (let i = 2; i < 40; i++) {
-    const cardNumber = Math.floor(Math.random() * 10000000000000000)
-      .toString()
-      .padStart(16, "0");
-    const cinOrPassport = `AB${Math.floor(Math.random() * 1000000)
-      .toString()
-      .padStart(6, "0")}`;
-    const employeeName = `Employee ${i}`;
-    const balance = `MAD ${Math.floor(Math.random() * 5000)}`;
-    const company = "sarl";
-    const status = Math.random() < 0.5 ? "Active" : "Disabled"; // Randomly choose "Active" or "Disabled"
+  let cardsStatusData: CardStatus[] = [];
 
-    cardsStatusData.push({
-      cardNumber,
-      cinOrPassport,
-      employeeName,
-      balance,
-      company,
-      status,
-    });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const axiosConfig = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+
+        const response = await axios.get(
+          "http://localhost:8000/dashboard/listcartes",
+          axiosConfig
+        );
+        const { data } = response;
+        console.log("la reponse :", response);
+
+        if (response.status === 200) {
+          cardsStatusData = data.map((card: any) => ({
+            cardNumber: card.id,
+            cinOrPassport: card.employeId,
+            employeeName: card.employeName,
+            balance: `MAD ${card.solde}`,
+            company: card.entreprise,
+            status:
+              card.status === "ACTIVATED"
+                ? "Active"
+                : card.status === "DEACTIVATED"
+                ? "Disabled"
+                : "Preactive",
+          }));
+          setCardsData(cardsStatusData);
+          console.log(cardsStatusData);
+        } else {
+          console.error("Oops, something went wrong.");
+        }
+      } catch (error: any) {
+        console.error(
+          "Fetching data failed:",
+          error.response ? error.response.data : error
+        );
+      }
+    };
+
+    if (accessToken) {
+      fetchData();
+    }
+  }, [accessToken]);
+  console.log("look here ", cardsData);
+
   return (
     <TableContainer
       mb={"9px"}
@@ -72,14 +96,14 @@ const CardsStatusTable = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {cardsStatusData.map((card, index) => (
+          {cardsData.map((card, index) => (
             <Tr key={index}>
               <Td textAlign="center">{card.cardNumber}</Td>
               <Td textAlign="center">{card.cinOrPassport}</Td>
               <Td textAlign="center">{card.employeeName}</Td>
               <Td textAlign="center">{card.balance}</Td>
               <Td textAlign="center">{card.company}</Td>
-              {card.status === "Disabled" && (
+              {card.status === "Desactive" && (
                 <Td textAlign="center">
                   <Highlight
                     query={card.status}
@@ -102,6 +126,20 @@ const CardsStatusTable = () => {
                       py: "1",
                       rounded: "full",
                       bg: "green.100",
+                    }}>
+                    {card.status}
+                  </Highlight>
+                </Td>
+              )}
+              {card.status === "Preactive" && (
+                <Td textAlign="center">
+                  <Highlight
+                    query={card.status}
+                    styles={{
+                      px: "2",
+                      py: "1",
+                      rounded: "full",
+                      bg: "yellow.100",
                     }}>
                     {card.status}
                   </Highlight>

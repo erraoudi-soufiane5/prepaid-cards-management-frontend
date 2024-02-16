@@ -8,17 +8,64 @@ import {
   Td,
   Highlight,
 } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+interface Transaction {
+  cardNumber: string;
+  employeeID: string;
+  statusOperation: "Credit" | "Debit";
+  amount: string;
+  date: string;
+}
 
 const TransactionsTable = () => {
-  // Generate transaction data list with 40 rows
-  const transactionsData = Array.from({ length: 40 }, (_, index) => ({
-    cardNumber: `1234 5678 9012 ${index + 1}`,
-    employeeID: `EMP${index + 1}`,
-    statusOperation: index % 2 === 0 ? "Credit" : "Debit",
-    amount: `MAD ${(index + 1) * 1000}`,
-    date: new Date().toLocaleDateString(),
-  }));
+  const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!accessToken) return; // Exit early if access token is not available
+
+        const axiosConfig = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+
+        const response = await axios.get(
+          "http://localhost:8000/dashboard/transactions",
+          axiosConfig
+        );
+
+        if (response.status === 200) {
+          const { data } = response;
+          const mappedTransactions = data.map((transaction: any) => ({
+            cardNumber: transaction.numeroCarte,
+            employeeID: transaction.nomPerson,
+            statusOperation: transaction.description.includes("Credit")
+              ? "Credit"
+              : "Debit",
+            amount: `MAD ${transaction.montant}`,
+            date: new Date(transaction.date).toLocaleDateString(),
+          }));
+          setTransactionsData(mappedTransactions);
+          console.log("Mapped transactions:", mappedTransactions);
+        } else {
+          console.error("Oops, something went wrong.");
+        }
+      } catch (error: any) {
+        console.error(
+          "Fetching data failed:",
+          error.response ? error.response.data : error
+        );
+      }
+    };
+
+    fetchData();
+  }, [accessToken]);
 
   return (
     <TableContainer
