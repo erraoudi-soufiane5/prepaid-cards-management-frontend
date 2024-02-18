@@ -12,9 +12,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import CustomDrawer from "./CustomDrawer";
+import Login from "./Login";
 
 const NavBar: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const isLoggedIn = localStorage.getItem("accessToken") !== null;
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -29,7 +31,7 @@ const NavBar: React.FC = () => {
           spacing="8px"
           separator={<ChevronRightIcon color="gray.500" />}>
           <BreadcrumbItem>
-            <BreadcrumbLink href="#">Home</BreadcrumbLink>
+            <BreadcrumbLink>Home</BreadcrumbLink>
           </BreadcrumbItem>
 
           <BreadcrumbItem isCurrentPage>
@@ -38,15 +40,21 @@ const NavBar: React.FC = () => {
         </Breadcrumb>
       </HStack>
       <HStack>
-        <Wrap>
-          <WrapItem>
-            <button onClick={toggleDrawer}>
-              <Avatar bg="#cbd5e0" size="sm" name="ERRAOUDI Soufiane" />
-            </button>
-          </WrapItem>
-        </Wrap>
+        {isLoggedIn ? (
+          <>
+            <Wrap>
+              <WrapItem>
+                <button onClick={toggleDrawer}>
+                  <Avatar bg="#cbd5e0" size="sm" name="ERRAOUDI Soufiane" />
+                </button>
+              </WrapItem>
+            </Wrap>
+            <CustomDrawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
+          </>
+        ) : (
+          <Login />
+        )}
       </HStack>
-      <CustomDrawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
     </HStack>
   );
 };

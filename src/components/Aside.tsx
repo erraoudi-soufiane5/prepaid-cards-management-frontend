@@ -1,13 +1,14 @@
-import {
-  CalendarIcon,
-  DragHandleIcon,
-  SettingsIcon,
-  PlusSquareIcon,
-  TimeIcon,
-  InfoOutlineIcon,
-} from "@chakra-ui/icons";
 import { Button, Stack } from "@chakra-ui/react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  FiHome,
+  FiPlusCircle,
+  FiClipboard,
+  FiBell,
+  FiSettings,
+  FiLogOut,
+  FiGrid,
+} from "react-icons/fi";
 
 const Aside = () => {
   const navigate = useNavigate();
@@ -16,6 +17,9 @@ const Aside = () => {
   return (
     <Stack paddingX={"20px"} paddingY={"50px"} spacing={2} width={"250px"}>
       <Button
+        display="flex"
+        alignItems="center"
+        leftIcon={<FiGrid />}
         borderRadius={"14px"}
         colorScheme="gray"
         color={"teal"}
@@ -26,6 +30,9 @@ const Aside = () => {
       </Button>
 
       <Button
+        display="flex"
+        alignItems="center"
+        leftIcon={<FiPlusCircle />}
         borderRadius={"14px"}
         colorScheme="gray"
         color={"teal"}
@@ -36,6 +43,9 @@ const Aside = () => {
       </Button>
 
       <Button
+        display="flex"
+        alignItems="center"
+        leftIcon={<FiClipboard />}
         borderRadius={"14px"}
         colorScheme="gray"
         color={"teal"}
@@ -45,6 +55,9 @@ const Aside = () => {
         Manage Cards
       </Button>
       <Button
+        display="flex"
+        alignItems="center"
+        leftIcon={<FiBell />}
         borderRadius={"14px"}
         colorScheme="gray"
         color={"teal"}
@@ -55,6 +68,9 @@ const Aside = () => {
         Notifications
       </Button>
       <Button
+        display="flex"
+        alignItems="center"
+        leftIcon={<FiSettings />}
         borderRadius={"14px"}
         colorScheme="gray"
         color={"teal"}
@@ -65,6 +81,9 @@ const Aside = () => {
         Settings
       </Button>
       <Button
+        display="flex"
+        alignItems="center"
+        leftIcon={<FiLogOut />}
         borderRadius={"14px"}
         colorScheme="gray"
         color={"teal"}
