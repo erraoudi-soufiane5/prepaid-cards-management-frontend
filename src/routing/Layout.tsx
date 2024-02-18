@@ -23,7 +23,7 @@ function Layout() {
         bg="#ffffff"
         position="fixed"
         width="100%"
-        zIndex="9999">
+        zIndex="100">
         {" "}
         {/* Set zIndex to a high value */}
         <NavBar />

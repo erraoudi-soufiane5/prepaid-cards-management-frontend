@@ -10,8 +10,16 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
+import CustomDrawer from "./CustomDrawer";
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <HStack padding={3} justifyContent={"space-between"}>
       <HStack>
@@ -19,8 +27,7 @@ const NavBar = () => {
         <Breadcrumb
           marginLeft={4}
           spacing="8px"
-          separator={<ChevronRightIcon color="gray.500" />}
-        >
+          separator={<ChevronRightIcon color="gray.500" />}>
           <BreadcrumbItem>
             <BreadcrumbLink href="#">Home</BreadcrumbLink>
           </BreadcrumbItem>
@@ -33,10 +40,13 @@ const NavBar = () => {
       <HStack>
         <Wrap>
           <WrapItem>
-            <Avatar bg="#cbd5e0" size="sm" name="ERRAOUDI Soufiane" />
+            <button onClick={toggleDrawer}>
+              <Avatar bg="#cbd5e0" size="sm" name="ERRAOUDI Soufiane" />
+            </button>
           </WrapItem>
         </Wrap>
       </HStack>
+      <CustomDrawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
     </HStack>
   );
 };

@@ -72,7 +72,6 @@ const CreateCardForm = ({ onAdd }: Props) => {
               }}>
               <option value="Homme">Homme</option>
               <option value="Femme">Femme</option>
-              <option value="Autre">Autre</option>
             </Select>
           </FormControl>
         </GridItem>

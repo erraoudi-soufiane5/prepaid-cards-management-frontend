@@ -24,28 +24,34 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState<string | null>(null);
-  
+
   const handleLogin = () => {
     const loginData = {
       username: email,
-      password: password
+      password: password,
     };
-
 
     console.log("login data", loginData);
     axios
       .post("http://localhost:8000/login", loginData)
       .then((response) => {
         const { data } = response;
-        if (response.status === 200 && data && data['access-token'] && data['refresh-token']) {
-          console.log(response)
-          const { 'access-token': accessToken, 'refresh-token': refreshToken } = data;
+        if (
+          response.status === 200 &&
+          data &&
+          data["access-token"] &&
+          data["refresh-token"]
+        ) {
+          console.log(response);
+          const { "access-token": accessToken, "refresh-token": refreshToken } =
+            data;
           localStorage.setItem("refreshToken", refreshToken);
           localStorage.setItem("accessToken", accessToken);
           console.log("Access token:", accessToken);
           console.log("Refresh token:", refreshToken);
           const decodedToken: any = jwtDecode(accessToken);
           const role = decodedToken.role;
+
           setUserRole(role);
           setIsLoggedIn(true);
         } else {
@@ -58,20 +64,18 @@ const Login = () => {
           error.response ? error.response.data : error
         );
       });
-
   };
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (userRole === 'ROLE_USER') {
+      if (userRole === "ROLE_USER") {
         navigate("/dashboard");
-      } else if (userRole === 'ROLE_ADMIN') {
+      } else if (userRole === "ROLE_ADMIN") {
         navigate("/admin/newAccount");
       } else {
-        
       }
     }
-  }, [isLoggedIn, navigate,userRole]);
+  }, [isLoggedIn, navigate, userRole]);
   return (
     <>
       <Button onClick={onOpen}>Login</Button>
@@ -84,7 +88,6 @@ const Login = () => {
             <FormControl>
               <FormLabel>Email address</FormLabel>
               <Input type="email" onChange={(e) => setEmail(e.target.value)} />
-              {/* <FormHelperText>Enter your email.</FormHelperText> */}
             </FormControl>
             <FormControl>
               <FormLabel>Password</FormLabel>
@@ -92,7 +95,6 @@ const Login = () => {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {/* <FormHelperText>Enter your password.</FormHelperText> */}
             </FormControl>
           </ModalBody>
 

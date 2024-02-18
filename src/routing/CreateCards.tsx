@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
 import CreateCardForm from "../components/CreateCardForm";
 import { IPreActivatedCard } from "../Model/PreActivatedCard";
