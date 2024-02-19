@@ -14,6 +14,11 @@ const Aside = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
+  };
   return (
     <Stack paddingX={"20px"} paddingY={"50px"} spacing={2} width={"250px"}>
       <Button
@@ -89,8 +94,7 @@ const Aside = () => {
         color={"teal"}
         variant={currentPath === "/logout" ? "solid" : "ghost"}
         justifyContent="flex-start"
-        // onClick={() => navigate("/log out")}
-      >
+        onClick={handleLogout}>
         Log out
       </Button>
     </Stack>

@@ -45,9 +45,8 @@ const TransactionsTable = () => {
           const mappedTransactions = data.map((transaction: any) => ({
             cardNumber: transaction.numeroCarte,
             employeeID: transaction.nomPerson,
-            statusOperation: transaction.description.includes("Credit")
-              ? "Credit"
-              : "Debit",
+            statusOperation:
+              transaction.typeOperation === "CREDIT" ? "Credit" : "Debit",
             amount: `MAD ${transaction.montant}`,
             date: new Date(transaction.date).toLocaleDateString(),
           }));

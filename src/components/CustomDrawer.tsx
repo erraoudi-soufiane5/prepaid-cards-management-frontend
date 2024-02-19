@@ -35,10 +35,8 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear access token from localStorage
     localStorage.removeItem("accessToken");
-
-    // Navigate to the landing page
+    onClose();
     navigate("/");
   };
 
