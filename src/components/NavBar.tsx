@@ -48,7 +48,7 @@ const NavBar: React.FC = () => {
     <HStack padding={3} justifyContent={"space-between"}>
       <HStack>
         <Image src={bankOfAfricaLogo} htmlHeight="72px" htmlWidth="220px" />
-        {location.pathname !== "/" ? ( // Check if not on home page
+        {location.pathname !== "/" ? (
           <Breadcrumb
             marginLeft={4}
             spacing="8px"
@@ -62,22 +62,37 @@ const NavBar: React.FC = () => {
               <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-        ) : (
+        ) : isLoggedIn ? ( // Check if logged in
           <Menu>
             <MenuButton
               as={Button}
               rightIcon={<ChevronDownIcon />}
               style={{ marginLeft: "15px" }}>
-              My plateform
+              My Platform
             </MenuButton>
             <MenuList>
-              <MenuItem icon={<RepeatIcon />} command="⌘⇧N">
+              <MenuItem
+                icon={<RepeatIcon />}
+                command="⌘⇧N"
+                onClick={() => {
+                  navigate("/dashboard");
+                }}>
                 My Dashboard
               </MenuItem>
-              <MenuItem icon={<AddIcon />} command="⌘T">
+              <MenuItem
+                icon={<AddIcon />}
+                command="⌘T"
+                onClick={() => {
+                  navigate("/createCards");
+                }}>
                 Create Cards
               </MenuItem>
-              <MenuItem icon={<ExternalLinkIcon />} command="⌘N">
+              <MenuItem
+                icon={<ExternalLinkIcon />}
+                command="⌘N"
+                onClick={() => {
+                  navigate("/manageCards");
+                }}>
                 Manage Cards
               </MenuItem>
 
@@ -86,7 +101,7 @@ const NavBar: React.FC = () => {
               </MenuItem>
             </MenuList>
           </Menu>
-        )}
+        ) : null}{" "}
       </HStack>
       <HStack>
         {isLoggedIn ? (
@@ -98,7 +113,6 @@ const NavBar: React.FC = () => {
                 </button>
               </WrapItem>
             </Wrap>
-            {/* Assuming CustomDrawer component handles drawer content */}
             <CustomDrawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
           </>
         ) : (

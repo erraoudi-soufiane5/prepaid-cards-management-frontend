@@ -23,6 +23,7 @@ import {
   FiHelpCircle,
   FiMessageCircle,
   FiPhone,
+  FiGrid,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -55,6 +56,15 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({ isOpen, onClose }) => {
         </DrawerHeader>
         <DrawerBody>
           <VStack spacing={4} align="stretch">
+            <Button
+              variant="ghost"
+              leftIcon={<FiGrid />}
+              justifyContent="flex-start"
+              onClick={() => {
+                navigate("/dashboard");
+              }}>
+              Your plateform
+            </Button>
             <Button
               variant="ghost"
               leftIcon={<Icon as={FiUser} />}
