@@ -18,8 +18,6 @@ import {
   Image,
   Menu,
   MenuButton,
-  MenuDivider,
-  MenuGroup,
   MenuItem,
   MenuList,
   Wrap,
@@ -47,7 +45,13 @@ const NavBar: React.FC = () => {
   return (
     <HStack padding={3} justifyContent={"space-between"}>
       <HStack>
-        <Image src={bankOfAfricaLogo} htmlHeight="72px" htmlWidth="220px" />
+        <Image
+          onClick={() => navigate("/")}
+          src={bankOfAfricaLogo}
+          htmlHeight="72px"
+          htmlWidth="220px"
+          _hover={{ cursor: "pointer" }}
+        />
         {location.pathname !== "/" ? (
           <Breadcrumb
             marginLeft={4}
@@ -55,14 +59,17 @@ const NavBar: React.FC = () => {
             separator={<ChevronRightIcon color="gray.500" />}>
             <BreadcrumbItem>
               <BreadcrumbLink onClick={handleHomeClick}>Home</BreadcrumbLink>{" "}
-              {/* Add onClick handler */}
             </BreadcrumbItem>
 
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
+              <BreadcrumbLink>
+                {location.pathname === "/dashboard" && "Dashboard"}
+                {location.pathname === "/createCards" && "Create Cards"}
+                {location.pathname === "/manageCards" && "Manage Cards"}
+              </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-        ) : isLoggedIn ? ( // Check if logged in
+        ) : isLoggedIn ? (
           <Menu>
             <MenuButton
               as={Button}
@@ -74,25 +81,19 @@ const NavBar: React.FC = () => {
               <MenuItem
                 icon={<RepeatIcon />}
                 command="⌘⇧N"
-                onClick={() => {
-                  navigate("/dashboard");
-                }}>
+                onClick={() => navigate("/dashboard")}>
                 My Dashboard
               </MenuItem>
               <MenuItem
                 icon={<AddIcon />}
                 command="⌘T"
-                onClick={() => {
-                  navigate("/createCards");
-                }}>
+                onClick={() => navigate("/createCards")}>
                 Create Cards
               </MenuItem>
               <MenuItem
                 icon={<ExternalLinkIcon />}
                 command="⌘N"
-                onClick={() => {
-                  navigate("/manageCards");
-                }}>
+                onClick={() => navigate("/manageCards")}>
                 Manage Cards
               </MenuItem>
 
@@ -101,7 +102,7 @@ const NavBar: React.FC = () => {
               </MenuItem>
             </MenuList>
           </Menu>
-        ) : null}{" "}
+        ) : null}
       </HStack>
       <HStack>
         {isLoggedIn ? (
