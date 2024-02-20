@@ -9,6 +9,7 @@ import FaqSection from "../components/FeqSection";
 import ProcessSection from "../components/ProcessSection";
 import AboutUsSection from "../components/AboutUsSection";
 import BenefitsSection from "../components/BenefitsSection";
+import FooterSection from "../components/FooterSection";
 
 const LandingPage = () => {
   return (
@@ -22,6 +23,7 @@ const LandingPage = () => {
         <BenefitsSection />
         <FaqSection />
         <ContactSection />
+        <FooterSection />
       </Box>
     </>
   );

@@ -1,35 +1,51 @@
+import React, { useState } from "react";
 import {
+  Button,
   FormControl,
   FormLabel,
   Input,
   FormHelperText,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { useState } from "react";
+
 interface Props {
   label: string;
   type: string;
   onChange: (value: string) => void;
+  validateEmail?: boolean;
 }
 
-const FormControlComponent = ({ label, type, onChange }: Props) => {
+const FormControlComponent: React.FC<Props> = ({
+  label,
+  type,
+  onChange,
+  validateEmail = false,
+}) => {
   const [input, setInput] = useState("");
+  const [error, setError] = useState(false);
 
-  const handleInputChange = (e: { target: { value: any } }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInput(newValue);
     onChange(newValue);
+
+    // Validate email format if enabled
+    if (validateEmail) {
+      const regex = /\S+@\S+\.\S+/;
+      setError(newValue.length > 0 && !regex.test(newValue));
+    }
   };
 
-  const isError = input === "";
+  const isError = error && validateEmail;
+
   return (
-    <FormControl /*isInvalid={isError}*/ mb={"8px"} isRequired>
+    <FormControl isRequired isInvalid={isError} mb={"8px"}>
       <FormLabel>{label}</FormLabel>
       <Input type={type} value={input} onChange={handleInputChange} />
-      {!isError ? (
-        <FormHelperText>Enter the employee's {label}.</FormHelperText>
+      {isError ? (
+        <FormErrorMessage>{label} is not a valid email.</FormErrorMessage>
       ) : (
-        <FormErrorMessage>{label} is required.</FormErrorMessage>
+        <FormHelperText>Enter the {label}.</FormHelperText>
       )}
     </FormControl>
   );

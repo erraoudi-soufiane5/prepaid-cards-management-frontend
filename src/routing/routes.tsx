@@ -7,9 +7,11 @@ import LandingPage from "./LandingPage";
 import AdminLayout from "./AdminLayout";
 import AdminDashboard from "./AdminDashboard";
 import CreateAccount from "./CreateAccount";
+import ArrowBox from "./ArrowBox";
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
+  { path: "/arrowBox", element: <ArrowBox /> },
   {
     path: "dashboard",
     element: <Layout />,
@@ -35,6 +37,5 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [{ index: true, element: <CreateAccount /> }],
   },
-  
 ]);
 export default router;

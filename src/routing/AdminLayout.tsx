@@ -16,8 +16,7 @@ function AdminLayout() {
         lg: "250px 1fr",
       }}
       height="100vh"
-      templateRows="65px 1fr"
-    >
+      templateRows="65px 1fr">
       <GridItem area="nav" bg="#ffffff" position="fixed" width="100%">
         <NavBar />
       </GridItem>
@@ -28,16 +27,7 @@ function AdminLayout() {
         </GridItem>
       </Show>
 
-      <GridItem
-        area="main"
-        bg="#F5F5F5"
-        paddingLeft={3}
-        paddingBottom={3}
-        paddingTop={3}
-        paddingRight={1}
-        flex="1"
-        height="1fr"
-      >
+      <GridItem area="main" bg="#F5F5F5" padding={5} flex="1" height="1fr">
         <Outlet />
       </GridItem>
     </Grid>
